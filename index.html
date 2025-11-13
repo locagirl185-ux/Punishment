@@ -4,41 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Countdown Page</title>
-  <link rel="icon" type="image/jpeg" href="logo.jpg">
-  <!-- Google Fonts: Great Vibes -->
+
+  <!-- Optional favicon -->
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
   <style>
+    /* ===== Base layout ===== */
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
       min-height: 100vh;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, black, darkred);
       color: white;
-      overflow-x: hidden;
+      background: linear-gradient(135deg, black, darkred);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
+      overflow-x: hidden;
       padding-top: 5vh;
     }
 
-    /* Animated wave background */
+    /* ===== Animated wave background ===== */
     .flow-line {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       z-index: 0;
       pointer-events: none;
     }
     .flow-line::before {
       content: "";
       position: absolute;
-      width: 300%;
-      height: 300%;
+      width: 300%; height: 300%;
       background: url('data:image/svg+xml;utf8,\
 <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="320">\
 <path fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2" d="M0,160 C320,80 640,240 960,160 C1280,80 1600,240 1920,160 L1920,320 L0,320 Z"/>\
@@ -52,7 +54,7 @@
       to { transform: translateX(-50%); }
     }
 
-    /* Box title */
+    /* ===== Titles and text ===== */
     .box-title {
       font-family: 'Great Vibes', cursive;
       font-size: 2.5rem;
@@ -62,19 +64,18 @@
       z-index: 1;
     }
 
-    /* Countdown box */
+    /* ===== Countdown box ===== */
     .countdown-box {
       background: rgba(0,0,0,0.6);
-      border: 4px solid rgba(200,50,50,0.9);
+      border: 3px solid rgba(200,50,50,0.9);
       border-radius: 20px;
       padding: 5vh 5vw;
       text-align: center;
       box-shadow: 0 10px 25px rgba(0,0,0,0.7);
       transition: all 0.4s ease;
-      z-index: 1;
-      position: relative;
       width: 90%;
       max-width: 450px;
+      z-index: 1;
     }
     .countdown-box:hover {
       transform: scale(1.05);
@@ -94,7 +95,7 @@
       opacity: 0.9;
     }
 
-    /* Progress bar title */
+    /* ===== Progress bar section ===== */
     .progress-title {
       font-family: 'Great Vibes', cursive;
       font-size: 2rem;
@@ -103,7 +104,6 @@
       text-align: center;
     }
 
-    /* Progress bar */
     .progress-container {
       width: 90%;
       max-width: 450px;
@@ -111,14 +111,15 @@
       background: rgba(255,255,255,0.2);
       border-radius: 12px;
       overflow: hidden;
-      transition: all 0.3s ease;
       cursor: pointer;
+      transition: all 0.3s ease;
       margin-bottom: 0.5vh;
     }
     .progress-container:hover {
-      height: 35px;
+      height: 30px;
       background: rgba(255,255,255,0.1);
     }
+
     .progress-fill {
       height: 100%;
       background: #cc3333;
@@ -127,19 +128,16 @@
       transition: width 0.5s ease;
     }
 
-    /* Start and End dates */
     .progress-dates {
       width: 90%;
       max-width: 450px;
       display: flex;
       justify-content: space-between;
       font-family: 'Great Vibes', cursive;
-      font-size: 0.9rem;
+      font-size: 1rem;
       margin-bottom: 1vh;
-      color: white;
     }
 
-    /* Today date shown on hover */
     .today-date {
       width: 90%;
       max-width: 450px;
@@ -155,26 +153,27 @@
       opacity: 1;
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 500px) {
-      .days { font-size: 10vw; }
-      .label { font-size: 5vw; }
+    /* ===== Responsive adjustments ===== */
+    @media (max-width: 600px) {
       .box-title { font-size: 2rem; }
-      .progress-title { font-size: 1.5rem; }
+      .days { font-size: 12vw; }
+      .label { font-size: 6vw; }
+      .progress-title { font-size: 5vw; }
+      .progress-dates { font-size: 3.5vw; }
     }
   </style>
 </head>
 <body>
   <div class="flow-line"></div>
 
-  <div class="box-title">Am sorry Master</div>
+  <div class="box-title">Countdown Timer</div>
 
   <div class="countdown-box">
     <div class="days" id="days">0</div>
     <div class="label">Days Remaining</div>
   </div>
 
-  <div class="progress-title">Your poor slave is impatiently waiting</div>
+  <div class="progress-title">Progress toward January 15</div>
 
   <div class="progress-container">
     <div class="progress-fill" id="progress-fill"></div>
@@ -188,7 +187,7 @@
   <div class="today-date" id="today-date"></div>
 
   <script>
-    const totalDays = 92;
+    const totalDays = 92; // Between Oct 15 and Jan 15
 
     function formatDate(date) {
       const options = { day: 'numeric', month: 'short' };
@@ -197,19 +196,18 @@
 
     function updateCountdown() {
       const today = new Date();
-      const startDate = new Date(today.getFullYear(), 9, 15); // Oct 15
-      const endDate = new Date(today.getFullYear() + (today > new Date(today.getFullYear(), 0, 15) ? 1 : 0), 0, 15); // Jan 15
+      const endDate = new Date(today.getFullYear(), 0, 15); // Jan 15
+      if (today > endDate) endDate.setFullYear(today.getFullYear() + 1);
 
       const msPerDay = 1000 * 60 * 60 * 24;
       const daysRemaining = Math.ceil((endDate - today) / msPerDay);
       const daysPassed = Math.max(0, totalDays - daysRemaining);
 
       document.getElementById('days').textContent = daysRemaining;
-
-      const percentage = (daysPassed / totalDays) * 100;
-      document.getElementById('progress-fill').style.width = percentage + '%';
-
-      document.getElementById('today-date').textContent = `Today: ${formatDate(today)}`;
+      document.getElementById('progress-fill').style.width =
+        (daysPassed / totalDays) * 100 + '%';
+      document.getElementById('today-date').textContent =
+        `Today: ${formatDate(today)}`;
     }
 
     updateCountdown();
